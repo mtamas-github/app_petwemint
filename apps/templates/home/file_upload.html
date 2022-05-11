@@ -1,0 +1,8 @@
+<form id="uploadForm" method="POST">
+            {% csrf_token %}
+            {{ form|crispy  }}
+                  <label class="form-label" for="customFile">Upload a photo</label>
+              <input type="file" class="form-control" id="customFile" />
+
+            <input type="submit" name="signupSubmit" class="btn btn-success btn-lg" />
+</form>
