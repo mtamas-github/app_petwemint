@@ -59,6 +59,8 @@ LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
 LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
 
+APP_URL = env('APP_URL')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -98,6 +100,15 @@ DATABASES = {
 
     }
 }
+
+# Email SMTP configuration
+
+EMAIL_HOST = env('MAIL_HOST')
+EMAIL_HOST_USER = env('MAIL_USERNAME') # this is exactly the value 'apikey'
+EMAIL_HOST_PASSWORD = env('MAIL_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
