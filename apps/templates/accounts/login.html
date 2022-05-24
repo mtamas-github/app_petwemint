@@ -52,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div class="input-group mb-3">
+          <div class="input-group">
             {{ form.password }}
             <div class="input-group-append">
               <div class="input-group-text">
@@ -60,6 +60,11 @@
               </div>
             </div>
           </div>
+
+          <div class="text-left mb-3">
+            <a href="{% url 'forget-password' %}" class="text-center">Forgotten Password?</a>
+          </div>
+
           <div class="row">
             <div class="col-8">
               <div class="icheck-primary">
