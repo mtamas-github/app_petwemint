@@ -82,9 +82,10 @@ class Gallery:
     def get_uploaded_thumbnails(self):
         thumbs = []
         ts = self.images["upl"].get("t")
-        for i_id in ts:
-            for l_i in ts[i_id]:
-                thumbs.append(self.upload_link + '/' + ts[i_id][l_i])
+        if ts:
+            for i_id in ts:
+                for l_i in ts[i_id]:
+                    thumbs.append(self.upload_link + '/' + ts[i_id][l_i])
         return thumbs
 
     def _next_id(self):
