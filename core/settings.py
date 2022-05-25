@@ -90,11 +90,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'appseed_petwemint',
-        'USER': 'appseed',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'PASSWORD': env('DB_PASS')
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USERNAME'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+        'PASSWORD': env('DB_PASS'),
+
     }
 }
 

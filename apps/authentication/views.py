@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, ForgetPasswordForm
 
 
 def login_view(request):
@@ -54,4 +54,10 @@ def register_user(request):
         form = SignUpForm()
 
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
+
+def forget_password_view(request):
+
+    form = ForgetPasswordForm(request.POST or None)
+
+    return  render(request, "accounts/forget-password.html", {"form": form})
 
