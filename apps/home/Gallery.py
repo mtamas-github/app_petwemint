@@ -4,6 +4,23 @@ from PIL import Image
 
 DEFAULT_THUMBNAIL_WIDTH = 150
 
+# gallery directory: media
+# each user has a directory inside media. The name of directory is the user_id like: media/12
+# file name patterns:
+# original uploaded files:
+# upl_o_1.jpg
+# first 3 characters: type
+#     which can be: upl, gen or nft
+# fifth character is size where o is the original size, t is the thumbnail size
+# first number is the number of original uploaded file
+# second number is the generated file version number
+# example:
+#   upl_o_1_1.jpg  - original file
+#   upl_t_1_1.jpg  - thumbnail of original file
+#   gen_o_1_1.jpg  - first generated art for the first uploaded file normal size
+#   gen_t_1_1.jpg  - first generated art for the first uploaded file thumbnail size
+#   gen_o_1_2.jpg  - second generated art for the first uploaded file normal size
+#   gen_t_1_2.jpg  - second generated art for the first uploaded file thumbnail size
 
 class Thumbnail:
 
@@ -20,6 +37,7 @@ class Thumbnail:
         return self.media_dir + '/' + img
 
     def gen_thumbnail(self, th_img, width=DEFAULT_THUMBNAIL_WIDTH):
+        # generate a thumbnail from an image
         th_full = self._full_path(th_img)
         img = Image.open(self.orig_full_path)
         wpercent = (width / float(img.size[0]))
@@ -39,14 +57,7 @@ class Gallery:
         self._load_dir()
 
     def _load_dir(self):
-        # file name patterns:
-        # upl_o_1.jpg
-        # first 3 characters: type
-        # upl - original uploaded file
-        # upl_t_ - thumbnail
-        # gen_o_1_4.jpg
-        # gen - generated image - 1 original upload number - 4 generated number
-        # nft - nft created
+        # read the directory and load file names in a dictionary by file types
         imgs = {
             "upl": {},
             "gen": {},
@@ -77,6 +88,7 @@ class Gallery:
         return thumbs
 
     def _next_id(self):
+        # calculate the next available file id for upload name
         upl = self.images.get("upl", None)
         max_digit = 0
         if upl:
@@ -96,6 +108,7 @@ class Gallery:
 
     @staticmethod
     def _th_file_name(file_name):
+        # create thumbnail filename from uploaded filename
         return file_name.replace("_o_", "_t_")
 
     def generate_thumbnail(self, img):
@@ -103,6 +116,9 @@ class Gallery:
         t.gen_thumbnail(self._th_file_name(img))
 
     def upload_file(self):
+        # get the uploaded file from the post request data
+        # save it in the directory
+        # then generate thumbnail
         f = self.files_uploads.get("photo_upload", None)
         if f:
             next_id = self._next_id()
