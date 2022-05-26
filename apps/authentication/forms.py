@@ -2,10 +2,12 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
-
+from django.urls import reverse
+from django.conf import settings
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 
 
 class LoginForm(forms.Form):
@@ -67,3 +69,23 @@ class ForgetPasswordForm(forms.Form):
                 "class": "form-control"
             }
         ))
+
+    def getContent(self):
+
+        clean_data = super().clean()
+        to_email = clean_data.get('email')
+
+        reset_link = settings.APP_URL + reverse("reset-password")
+
+        msg = f"We have received a request to reset the password for the app.petwemint.com account associated with {to_email}\n"
+        msg += f"You can reset your password by clicking the link below: {reset_link} \n\n"
+        msg += f"If you did not request to reset your password please let us now by replying this email. \n\n"
+        msg += f"PetWeMint team"
+
+        return msg, to_email
+
+    def send(self):
+
+        msg, to_email = self.getContent()
+        send_mail('Password reset request', msg, 'admin@petwemint.com', [to_email], fail_silently=False)
+        

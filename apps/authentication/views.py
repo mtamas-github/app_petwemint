@@ -7,6 +7,7 @@ Copyright (c) 2019 - present AppSeed.us
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import LoginForm, SignUpForm, ForgetPasswordForm
+from django.core.mail import send_mail
 
 
 def login_view(request):
@@ -59,5 +60,10 @@ def forget_password_view(request):
 
     form = ForgetPasswordForm(request.POST or None)
 
+    if request.method == "POST" and form.is_valid():
+        form.send()
+
     return  render(request, "accounts/forget-password.html", {"form": form})
 
+def reset_password_view(request):
+    return "RESET PASSWORD VIEW"
