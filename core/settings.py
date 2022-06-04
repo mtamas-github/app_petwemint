@@ -18,6 +18,8 @@ CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_DIR = BASE_DIR + "/media"
 MEDIA_LINK = "/media"
 
+STYLE_DIR = BASE_DIR + "/style"
+
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 

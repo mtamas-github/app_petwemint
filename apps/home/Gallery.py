@@ -1,8 +1,9 @@
 import os
 from django.conf import settings
-from PIL import Image
+from .GenerateArt import GenerateArt
+from .FileName import FileName
+from .Thumbnail import Thumbnail
 
-DEFAULT_THUMBNAIL_WIDTH = 150
 
 # gallery directory: media
 # each user has a directory inside media. The name of directory is the user_id like: media/12
@@ -21,29 +22,6 @@ DEFAULT_THUMBNAIL_WIDTH = 150
 #   gen_t_1_1.jpg  - first generated art for the first uploaded file thumbnail size
 #   gen_o_1_2.jpg  - second generated art for the first uploaded file normal size
 #   gen_t_1_2.jpg  - second generated art for the first uploaded file thumbnail size
-
-class Thumbnail:
-
-    def __init__(self, media_dir, image):
-        if os.path.isdir(media_dir):
-            self.media_dir = media_dir
-        else:
-            raise Exception(f"Directory does not exist:{media_dir}")
-
-        self.orig = image
-        self.orig_full_path = self._full_path(self.orig)
-
-    def _full_path(self, img):
-        return self.media_dir + '/' + img
-
-    def gen_thumbnail(self, th_img, width=DEFAULT_THUMBNAIL_WIDTH):
-        # generate a thumbnail from an image
-        th_full = self._full_path(th_img)
-        img = Image.open(self.orig_full_path)
-        wpercent = (width / float(img.size[0]))
-        hsize = int((float(img.size[1]) * float(wpercent)))
-        img = img.resize((width, hsize), Image.ANTIALIAS)
-        img.save(th_full)
 
 
 class Gallery:
@@ -65,17 +43,16 @@ class Gallery:
         }
         if os.path.isdir(self.upload_dir):
             for file in os.listdir(self.upload_dir):
-                fl = file.split(".")
-                el = fl[0].split("_")
-                file_type = el[0]
-                i_or_t = el[1]
-                orig_version = el[2]
-                gen_version = el[3]
-                if i_or_t not in imgs[file_type]:
-                    imgs[file_type][i_or_t] = {}
-                if orig_version not in imgs[file_type][i_or_t]:
-                    imgs[file_type][i_or_t][orig_version] = {}
-                imgs[file_type][i_or_t][orig_version][gen_version] = file
+                fn = FileName(file)
+                size = fn.structure["size"]
+                type = fn.structure["type"]
+                fileno = fn.structure["fileno"]
+                version = fn.structure["version"]
+                if size not in imgs[type]:
+                    imgs[type][size] = {}
+                if fileno not in imgs[type][size]:
+                    imgs[type][size][fileno] = {}
+                imgs[type][size][fileno][version] = file
 
         self.images = imgs
 
@@ -115,6 +92,9 @@ class Gallery:
     def generate_thumbnail(self, img):
         t = Thumbnail(self.upload_dir, img)
         t.gen_thumbnail(self._th_file_name(img))
+
+    def generate_art(self):
+        gen = GenerateArt(self.images.get("upl"))
 
     def upload_file(self):
         # get the uploaded file from the post request data
