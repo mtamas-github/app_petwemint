@@ -71,6 +71,13 @@ def image_admin(request):
     if "search" in post:
         i_s = ImageSearch({"search": post["search"]})
         ids = i_s.search()
+    elif "download" in post:
+        i_s = ImageSearch(
+            {
+                "download": post["download"],
+                "filename": post["filename"]
+            })
+        i_s.download()
     context = {'segment': 'index', 'ids': ids}
     html_template = loader.get_template('admin/image_admin.html')
     return HttpResponse(html_template.render(context, request))

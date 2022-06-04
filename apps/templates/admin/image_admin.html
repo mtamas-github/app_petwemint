@@ -5,6 +5,13 @@
     <label>Search:</label><input type="text" name="search" />
 </form>
 {% for link in ids %}
-<img src="{{ link }}" class="rounded float-left" />
+<div class="rounded float-left">
+<form id="form_{{ link.id }}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="download" value="{{ link.large }}">
+    <input type="hidden" name="filename" value="{{ link.filename }}">
+    <input type="image" src="{{ link.small }}" alt="Submit">
+</form>
+</div>
 {% endfor %}
 {% endblock %}
