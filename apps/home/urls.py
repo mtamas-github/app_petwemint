@@ -13,6 +13,8 @@ urlpatterns = [
     path('file_upload', views.file_upload, name='file_upload'),
 
     path('media/<id>/<image>', views.images, name='images'),
+
+    path('image_admin', views.image_admin, name='image_admin'),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

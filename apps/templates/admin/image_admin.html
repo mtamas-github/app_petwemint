@@ -1,0 +1,10 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <label>Search:</label><input type="text" name="search" />
+</form>
+{% for link in ids %}
+<img src="{{ link }}" class="rounded float-left" />
+{% endfor %}
+{% endblock %}
