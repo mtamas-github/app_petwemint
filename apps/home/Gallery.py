@@ -62,7 +62,12 @@ class Gallery:
         if ts:
             for i_id in ts:
                 for l_i in ts[i_id]:
-                    thumbs.append(self.upload_link + '/' + ts[i_id][l_i])
+                    thumbs.append(
+                        {'src': self.upload_link + '/' + ts[i_id][l_i],
+                        'name': ts[i_id][l_i],
+                        'orig': ts[i_id][l_i].replace("_t_", "_o_")
+                        }
+                    )
         return thumbs
 
     def _next_id(self):
@@ -90,11 +95,13 @@ class Gallery:
         return file_name.replace("_o_", "_t_")
 
     def generate_thumbnail(self, img):
-        t = Thumbnail(self.upload_dir, img)
-        t.gen_thumbnail(self._th_file_name(img))
+        t = Thumbnail(img, self.upload_dir)
+        t.gen_thumbnail()
 
-    def generate_art(self):
-        gen = GenerateArt(self.images.get("upl"))
+    def generate_art(self, image):
+        gen = GenerateArt(image, self.upload_dir)
+        #gen.filters()
+        gen.neural_style()
 
     def upload_file(self):
         # get the uploaded file from the post request data

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Copyright (c) 2022 - PetWeMint
 """
 
 from django import template
@@ -12,6 +12,7 @@ from django.urls import reverse
 from .forms import UploadFileForm
 from .Gallery import Gallery
 from .ImageSearch import ImageSearch
+from .GenerateArt import GenerateArt
 
 
 @login_required(login_url="/login/")
@@ -56,6 +57,7 @@ def pages(request):
         html_template = loader.get_template('home/page-500.html')
         return HttpResponse(html_template.render(context, request))
 
+
 @login_required(login_url="/login/")
 def file_upload(request):
 
@@ -64,6 +66,8 @@ def file_upload(request):
         g.upload_file()
     return HttpResponseRedirect('/')
 
+
+@login_required(login_url="/login/")
 def image_admin(request):
 
     ids = []
@@ -81,3 +85,13 @@ def image_admin(request):
     context = {'segment': 'index', 'ids': ids}
     html_template = loader.get_template('admin/image_admin.html')
     return HttpResponse(html_template.render(context, request))
+
+
+@login_required(login_url="/login/")
+def gen_versions(request):
+
+    post = request.POST
+    if "image" in post:
+        g = Gallery(request)
+        g.generate_art(post["image"])
+    return HttpResponseRedirect('/')
