@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Copyright (c) 2022 - PetWeMint
 """
 
 from django.urls import path, re_path
@@ -11,6 +11,8 @@ urlpatterns = [
     # The home page
     path('', views.index, name='home'),
     path('file_upload', views.file_upload, name='file_upload'),
+
+    path('gen_versions', views.gen_versions, name='gen_versions'),
 
     path('media/<id>/<image>', views.images, name='images'),
 

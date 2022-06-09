@@ -12,7 +12,11 @@ whitenoise==5.3.0
 django-environ==0.8.1
 mysqlclient
 Pillow
+opencv-contrib-python
+numpy
+
 # tensorflow
 # tensorflow-hub
 # matplotlib
 neural-style-transfer
+ipython

@@ -22,3 +22,6 @@ class FileName:
     def generate_names(self, versions):
         return versions
 
+    def new_version(self, version_number):
+        return "gen_o_" + self.structure["fileno"] + '_' + str(version_number) + ".jpg"
+

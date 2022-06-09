@@ -50,11 +50,22 @@
               <div class="card-body">
                 <!-- /.d-flex -->
                   {% for thumbnail in photos %}
-                    <img src="{{ thumbnail }}">
+                  <div class="thumbnail">
+                      <img src="{{ thumbnail.src }}" onclick="toggleButton('#btn_{{ forloop.counter }}')">
+                      <div class="caption">
+                        <form method="POST" action="/gen_versions">
+                          {% csrf_token %}
+                          <input type="hidden" name="image" value="{{ thumbnail.orig }}" />
+                          <button type="submit" id="btn_{{ forloop.counter }}" class="btn btn-success" style="display:none">Generate Digital Art</button>
+                        </form>
+                      </div>
+                  </div>
                   {% endfor %}
+                <br/>
+                <hr>
                   <form action="/file_upload" method="POST" enctype="multipart/form-data">
                       {% csrf_token %}
-                      <label class="form-label" for="photo_upload">Upload a photo</label>
+                      <label class="form-label" for="photo_upload">Upload a photo of your pet</label>
                       <input type="file" name="photo_upload" class="form-control" id="photo_upload" />
 
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -84,11 +95,10 @@
   <!-- Bootstrap -->
   <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE -->
-  <script src="/static/assets/js/adminlte.js"></script>
-
-  <!-- OPTIONAL SCRIPTS -->
-  <script src="/static/assets/plugins/chart.js/Chart.min.js"></script>
-  <script src="/static/assets/js/demo.js"></script>
-  <script src="/static/assets/js/pages/dashboard3.js"></script>
+  <script type="text/javascript">
+    function toggleButton(id){
+      $( id ).toggle();
+    }
+  </script>
 
 {% endblock javascripts %}
