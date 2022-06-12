@@ -100,7 +100,7 @@ class Gallery:
 
     def generate_art(self, image):
         gen = GenerateArt(image, self.upload_dir)
-        #gen.filters()
+        gen.filters()
         gen.neural_style()
 
     def upload_file(self):

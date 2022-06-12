@@ -20,3 +20,4 @@ numpy
 # matplotlib
 neural-style-transfer
 ipython
+py-algorand-sdk
