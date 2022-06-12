@@ -8,9 +8,9 @@ from .Thumbnail import Thumbnail
 
 from django.conf import settings
 
-CONTENT_WEIGHT = 100
-STYLE_WEIGHT = 1
-EPOCHS = 100
+CONTENT_WEIGHT = 1000
+STYLE_WEIGHT = 0.001
+EPOCHS = 700
 logger = logging.getLogger(__name__)
 VERSION_OFFSET = 6  # this ist the offset as previouse styles already created
 
