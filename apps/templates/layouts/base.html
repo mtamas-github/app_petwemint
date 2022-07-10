@@ -16,9 +16,15 @@
 <body class="hold-transition {% block body_class %}{% endblock body_class %}">
 <div class="wrapper">
 
-    {% include 'includes/navigation.html' %}
+    <section class="pt-5 pb-5 bg-dark inner-header">
+        <div class="container">
+	        <div class="row">
+                <!-- include 'includes/navigation.html' -->
+            </div>
+        </div>
+    </section>
 
-    <!-- include 'includes/sidebar.html' %} -->
+    {% include 'includes/sidebar.html' %}
 
     {% block content %}{% endblock content %}
 
@@ -26,6 +32,7 @@
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
+        {% include 'includes/sidebar.html' %}
         <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->

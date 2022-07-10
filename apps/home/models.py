@@ -2,6 +2,7 @@
 """
 Copyright (c) 2022 - PetWeMint
 """
+import json
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -19,6 +20,18 @@ class CryptoAccount(models.Model):
     created = models.DateTimeField()
 
 
+class Pet(models.Model):
+
+    class Meta:
+        db_table = "pet"
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    pet_type = models.CharField(max_length=50)
+    text_data = models.TextField()
+    image = models.CharField(max_length=100)
+
+
 class NFTPrepared(models.Model):
 
     class Meta:
@@ -27,6 +40,10 @@ class NFTPrepared(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.CharField(max_length=100)
     data = models.TextField()
+    style = models.CharField(max_length=15)
+
+    def set_data(self, form_data):
+        self.data = json.dumps(form_data)
 
 
 class NFTMinted(models.Model):
@@ -38,5 +55,5 @@ class NFTMinted(models.Model):
     user = models.ForeignKey(User, on_delete=models.RESTRICT)
     prepared = models.ForeignKey(NFTPrepared, on_delete=models.RESTRICT)
     uuid = models.UUIDField()
-    location = models.CharField(maxlength=250)
+    location = models.CharField(max_length=250)
     url = models.CharField(max_length=150)

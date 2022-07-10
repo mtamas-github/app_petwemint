@@ -39,46 +39,65 @@
     <!-- Main content -->
     <div class="content">
       <div class="container">
-        <div class="row justify-content-center">
+        <div class="row jcontent-custify-enter">
+          <div class="col-lg-8">
+            <button class="btn btn-success" onclick="toggleButton('#new_pet');">Add a new pet</button>
+            <div class="card" id="new_pet" style="display: none">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">Tell us more about your pet</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="/save-pet" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  {{ pet_form.as_p }}
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row jcontent-custify-enter">
           <div class="col-lg-8">
             <div class="card">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
-                  <h3 class="card-title">All uploaded images</h3>
+                  <h3 class="card-title">List of your pets</h3>
                 </div>
               </div>
               <div class="card-body">
-                <!-- /.d-flex -->
-                  {% for thumbnail in photos %}
-                  <div class="thumbnail">
-                      <img src="{{ thumbnail.src }}" onclick="toggleButton('#btn_{{ forloop.counter }}')">
-                      <div class="caption">
-                        <form method="POST" action="/gen_versions">
-                          {% csrf_token %}
-                          <input type="hidden" name="image" value="{{ thumbnail.orig }}" />
-                          <button type="submit" id="btn_{{ forloop.counter }}" class="btn btn-success" style="display:none">Generate Digital Art</button>
-                        </form>
+                 {% if pets|length == 0 %}
+
+                 {% else %}
+                  <h3>Select a pet</h3>
+                  {% for pet in pets %}
+                      <div onclick="toggleButton('btn_{{ pet.id }}');">
+                        <h3>{{ pet.name }}</h3>
+                        <img src="{{ pet.thumbnail_url }}">
                       </div>
-                  </div>
+                      <button id="btn_{{ pet.id }}" style="display: none" onclick="PetSelect('{{ pet.id }}');">Select</button>
+
                   {% endfor %}
-                <br/>
-                <hr>
-                  <form action="/file_upload" method="POST" enctype="multipart/form-data">
-                      {% csrf_token %}
-                      <label class="form-label" for="photo_upload">Upload a photo of your pet</label>
-                      <input type="file" name="photo_upload" class="form-control" id="photo_upload" />
-
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-
+                {% endif %}
               </div>
             </div>
-            <!-- /.card -->
-
-          <!-- /.col-md-6 -->
+          </div>
         </div>
-        <!-- /.row -->
-      </div>
+        <div class="row jcontent-custify-enter" id="CertSelector" style="display: none">
+          <div class="col-lg-8">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                  <h3 class="card-title">Select a certificate layout</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <img src="/media/certs/cert1.png" class="img-fluid">
+
+              </div>
+
       <!-- /.container-fluid -->
     </div>
     <!-- /.content -->
@@ -96,8 +115,19 @@
   <script src="/static/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <!-- AdminLTE -->
   <script type="text/javascript">
+    var SelectedPet = "";
+    var SelectedCert = "";
     function toggleButton(id){
       $( id ).toggle();
+    }
+    function PetSelect(id){
+      SelectedPet(id);
+      $('#CertSelector').show();
+    }
+    function CertBuy(CertId){
+      SelectedCert = CertId;
+      url = "/buy?PetId=" + SelectedPet + "&CertId=" + SelectedCert;
+      window.location.replace(url)
     }
   </script>
 

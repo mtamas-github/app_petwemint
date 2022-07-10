@@ -1,0 +1,301 @@
+/*----------------------------
+------------------------------
+    Theme : PetWeMint
+    Version:  1.0.0
+    Author:  THK2006
+------------------------------
+----------------------------*/
+
+/*----------------------------
+Web font style start here
+----------------------------*/
+@font-face {
+    font-family: 'Inter';
+    src: url('../webfonts/Inter-Light.eot');
+    src: url('../webfonts/Inter-Light.eot?#iefix') format('embedded-opentype'),
+        url('../webfonts/Inter-Light.woff2') format('woff2'),
+        url('../webfonts/Inter-Light.woff') format('woff'),
+        url('../webfonts/Inter-Light.ttf') format('truetype'),
+        url('../webfonts/Inter-Light.svg#Inter-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../webfonts/Inter-Medium.eot');
+    src: url('../webfonts/Inter-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../webfonts/Inter-Medium.woff2') format('woff2'),
+        url('../webfonts/Inter-Medium.woff') format('woff'),
+        url('../webfonts/Inter-Medium.ttf') format('truetype'),
+        url('../webfonts/Inter-Medium.svg#Inter-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../webfonts/Inter-Regular.eot');
+    src: url('../webfonts/Inter-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../webfonts/Inter-Regular.woff2') format('woff2'),
+        url('../webfonts/Inter-Regular.woff') format('woff'),
+        url('../webfonts/Inter-Regular.ttf') format('truetype'),
+        url('../webfonts/Inter-Regular.svg#Inter-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../webfonts/Inter-SemiBold.eot');
+    src: url('../webfonts/Inter-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('../webfonts/Inter-SemiBold.woff2') format('woff2'),
+        url('../webfonts/Inter-SemiBold.woff') format('woff'),
+        url('../webfonts/Inter-SemiBold.ttf') format('truetype'),
+        url('../webfonts/Inter-SemiBold.svg#Inter-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('../webfonts/Inter-Bold.eot');
+    src: url('../webfonts/Inter-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../webfonts/Inter-Bold.woff2') format('woff2'),
+        url('../webfonts/Inter-Bold.woff') format('woff'),
+        url('../webfonts/Inter-Bold.ttf') format('truetype'),
+        url('../webfonts/Inter-Bold.svg#Inter-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+/*----------------------------
+Web font style end here
+----------------------------*/
+
+/*----------------------------
+Base theme styling start here
+----------------------------*/
+
+html,
+body {
+    font-family: 'Inter';
+    font-size: 16px;
+}
+
+ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+    border: none;
+    font-weight: 500;
+    -webkit-transition: color 350ms ease-in-out;
+    -moz-transition: color 350ms ease-in-out;
+    -ms-transition: color 350ms ease-in-out;
+    -o-transition: color 350ms ease-in-out;
+    transition: color 350ms ease-in-out;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+a:focus,
+a:hover {
+    text-decoration: none;
+    outline: none;
+}
+
+title {
+    text-transform: capitalize;
+}
+
+ul {
+    list-style: none;
+}
+
+
+/*----------------------------
+Base theme styling end here
+----------------------------*/
+
+
+
+/* side bar start */
+.pet-dashboard {
+    width: 100%;
+    overflow: hidden;
+}
+
+.pet-sidebar {
+    padding: 25px;
+    position: relative;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.pet-dashboard-body {
+    max-width: calc(100% - 260px);
+    padding: 20px 20px 20px 30px;
+}
+
+.navbar-brand {
+    margin-top: 35px;
+}
+
+
+.pet-sidebar-links {
+    margin-top: 57px;
+    position: relative;
+}
+
+.sidebar-links {
+    padding-top: 40px;
+    border-top: 1px solid #3EB489;
+}
+
+.sidebar-links li {
+    display: block;
+    margin-bottom: 30px;
+}
+
+.sidebar-links li a {
+    font-family: 'Inter';
+    font-weight: 600;
+    font-size: 16px;
+    color: #2E4A62;
+    padding: 13px 28px;
+    display: block;
+    border-radius: 8px;
+
+}
+
+
+.sidebar-links li.active a {
+    background: #90316A;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.sidebar-links li a svg {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+.sidebar-links li a:hover {
+    background: #90316A;
+    color: #fff;
+}
+
+.sidebar-links li a:hover svg path {
+    fill: #3EB489;
+}
+
+
+.pet-slidebar-btn {
+    position: absolute;
+    width: 80%;
+    bottom: 95px;
+}
+
+.btn-login {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 16px;
+    padding: 13px 28px;
+    display: block;
+    border-radius: 8px;
+    background: #3EB489;
+    text-align: left;
+    border: 1px solid #3EB489;
+    color: #FFFFFF;
+}
+
+.btn-login svg {
+    margin-right: 10px;
+}
+
+.btn-login:focus {
+    border: 1px solid #3EB489;
+    box-shadow: none;
+    outline: 0px;
+
+}
+
+.btn-login:hover {
+    color: #fff;
+    opacity: 0.8;
+}
+
+.pet-sidebar-btn {
+    justify-content: flex-end;
+}
+
+/* side bar end */
+
+
+/* topbar start */
+.pet-topbar {
+    position: relative;
+    background: #3EB489;
+    height: 100px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.pet-topbar::before {
+    content: "";
+    background: url('../images/header-shape.png') no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 90px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.pet-topbar-img {
+    position: relative;
+    top: 10px;
+    left: 30px;
+}
+
+.pet-topbar-right-img {
+    position: absolute;
+    display: block;
+    position: absolute;
+    right: 130px;
+    top: 57px;
+}
+
+/* topbar end */
