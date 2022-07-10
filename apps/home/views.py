@@ -8,11 +8,13 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
+from django.views.generic import TemplateView
 from django.urls import reverse
-from .forms import UploadFileForm
+from .forms import PetForm
 from .Gallery import Gallery
 from .ImageSearch import ImageSearch
-from .GenerateArt import GenerateArt
+from .models import Pet
+from .forms import PetForm
 
 
 @login_required(login_url="/login/")
@@ -20,9 +22,12 @@ def index(request):
 
     g = Gallery(request)
     photos = g.get_uploaded_thumbnails()
+    pet_form = PetForm()
+    pets = g.pets()
+    certs = g.certs()
 
-    context = {'segment': 'index', 'photos': photos}
-    html_template = loader.get_template('home/index3.html')
+    context = {'segment': 'index', 'photos': photos, 'pet_form': pet_form, 'pets': pets, 'certs': certs}
+    html_template = loader.get_template('home/dashboard.html')
     return HttpResponse(html_template.render(context, request))
 
 
@@ -30,6 +35,19 @@ def images(request, id, image):
     img_path = settings.MEDIA_DIR + '/' + id + '/' + image
     image_data = open(img_path, "rb").read()
     return HttpResponse(image_data, content_type="image/jpeg")
+
+
+def payment_success(request):
+    # deal with nft
+    pass
+
+
+class CancelView(TemplateView):
+    template_name = "cancel.html"
+
+# @login_required(login_url="/login/")
+# def buy(request, pet, cert):
+
 
 
 @login_required(login_url="/login/")
@@ -59,11 +77,24 @@ def pages(request):
 
 
 @login_required(login_url="/login/")
-def file_upload(request):
+def save_pet(request):
 
-    if request.FILES:
+    post = request.POST
+    file = request.FILES
+    pf = PetForm(post, file)
+    if pf.is_valid():
         g = Gallery(request)
-        g.upload_file()
+        file_path = g.upload_file()
+        pet = Pet()
+        pet.name = pf.cleaned_data.get("name")
+        pet.pet_type = pf.cleaned_data.get("type")
+        pet.memorable = pf.cleaned_data.get("text_data")
+        pet.image = file_path
+        pet.user_id = request.user.id
+        pet.save()
+    else:
+        print("form is invalid")
+
     return HttpResponseRedirect('/')
 
 
@@ -95,3 +126,4 @@ def gen_versions(request):
         g = Gallery(request)
         g.generate_art(post["image"])
     return HttpResponseRedirect('/')
+

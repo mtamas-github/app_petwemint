@@ -1,8 +1,10 @@
 import os
+import json
 from django.conf import settings
-from .GenerateArt import GenerateArt
+# from .GenerateArt import GenerateArt
 from .FileName import FileName
 from .Thumbnail import Thumbnail
+from .models import Pet, NFTPrepared
 
 
 # gallery directory: media
@@ -99,15 +101,47 @@ class Gallery:
         t.gen_thumbnail()
 
     def generate_art(self, image):
-        gen = GenerateArt(image, self.upload_dir)
-        gen.filters()
-        gen.neural_style()
+        # gen = GenerateArt(image, self.upload_dir)
+        # gen.filters()
+        # gen.neural_style()
+        pass
+
+    def pets(self):
+        pets = []
+        db_pets = Pet.objects.filter(user_id=self.id).values()
+        for pet in Pet.objects.filter(user_id=self.id).values():
+            print(pet)
+            pets.append(
+                {'id': pet["id"],
+                 'name': pet["name"],
+                 'image': pet["image"],
+                 'text': pet["text_data"],
+                 'thumbnail_url': self.thumbnail_url(pet["image"])
+                 }
+            )
+        print(pets)
+        return pets
+
+    def thumbnail_url(self, name):
+        print(name)
+        th = Thumbnail(name, settings.MEDIA_LINK + "/" + str(self.id))
+        return th.th_name()
+
+    def certs(self):
+        certs = []
+        for cert in NFTPrepared.objects.filter(user_id=self.id):
+            certs.append(
+                {'name': cert["name"],
+                 'image': cert["image"],
+                 'text': cert["text_data"]}
+            )
+        return certs
 
     def upload_file(self):
         # get the uploaded file from the post request data
         # save it in the directory
         # then generate thumbnail
-        f = self.files_uploads.get("photo_upload", None)
+        f = self.files_uploads.get("image", None)
         if f:
             next_id = self._next_id()
             new_file_name = self._upload_file_name(next_id)
@@ -116,3 +150,6 @@ class Gallery:
                     destination.write(chunk)
                 destination.close()
             self.generate_thumbnail(new_file_name)
+            return self.upload_link + '/' + new_file_name
+        else:
+            return None

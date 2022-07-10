@@ -10,9 +10,10 @@ urlpatterns = [
 
     # The home page
     path('', views.index, name='home'),
-    path('file_upload', views.file_upload, name='file_upload'),
+    path('save-pet', views.save_pet, name='save-pet'),
 
     path('gen_versions', views.gen_versions, name='gen_versions'),
+    # path('buy/<pet>/<cert>', views.buy, name="buy"),
 
     path('media/<id>/<image>', views.images, name='images'),
 
