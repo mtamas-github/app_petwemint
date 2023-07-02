@@ -32,4 +32,5 @@ apps/static/assets/.temp
 .env
 
 media/
+.idea/
 
