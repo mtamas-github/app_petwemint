@@ -14,6 +14,7 @@ class CryptoAccount(models.Model):
     class Meta:
         db_table = "crypto_accounts"
 
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.RESTRICT)
     address = models.CharField(max_length=50)
     mnemonic = models.CharField(max_length=100)
@@ -25,6 +26,7 @@ class Pet(models.Model):
     class Meta:
         db_table = "pet"
 
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     pet_type = models.CharField(max_length=50)
@@ -37,6 +39,7 @@ class NFTPrepared(models.Model):
     class Meta:
         db_table = "nft_prepared"
 
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.CharField(max_length=100)
     data = models.TextField()
@@ -51,6 +54,7 @@ class NFTMinted(models.Model):
     class Meta:
         db_table = "nft_final"
 
+    id = models.AutoField(primary_key=True)
     account = models.ForeignKey(CryptoAccount, on_delete=models.RESTRICT)
     user = models.ForeignKey(User, on_delete=models.RESTRICT)
     prepared = models.ForeignKey(NFTPrepared, on_delete=models.RESTRICT)

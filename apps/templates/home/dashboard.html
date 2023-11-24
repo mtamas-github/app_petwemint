@@ -145,11 +145,11 @@
                                              {% else %}
                                               <h3>Select a pet</h3>
                                               {% for pet in pets %}
-                                                  <div onclick="toggleButton('btn_{{ pet.id }}');">
+                                                  <div id="select_div_{{ pet.id}}" onclick="toggleButton('btn_{{ pet.id }}');">
                                                     <h3>{{ pet.name }}</h3>
                                                     <img src="{{ pet.thumbnail_url }}">
                                                   </div>
-                                                  <button id="btn_{{ pet.id }}" style="display: none" onclick="PetSelect('{{ pet.id }}');">Select</button>
+                                                  <button id="btn_{{ pet.id }}" onclick="PetSelect('{{ pet.id }}');">Select</button>
 
                                               {% endfor %}
                                             {% endif %}
@@ -182,11 +182,12 @@
                                             </div>
                                           </div>
                                           <div class="card-body">
-                                            <img src="/media/certs/cert1.png" class="img-fluid">
+                                            <img src="/media/certs/cert1.png" width="150" class="img-fluid">
+                                              <img src="/media/certs/cert2.png" width="150" class="img-fluid">
+                                              <img src="/media/certs/cert3.png" width="150" class="img-fluid">
                                           </div>
                                         </div>
                                       </div>
-                                </div>
 
 
                             </div>
@@ -220,7 +221,7 @@
                   $( id ).toggle();
                 }
                 function PetSelect(id){
-                  SelectedPet(id);
+                  SelectedPet = id;
                   $('#CertSelector').show();
                 }
                 function CertBuy(CertId){
@@ -234,3 +235,4 @@
     </body>
 
 </html>
+
